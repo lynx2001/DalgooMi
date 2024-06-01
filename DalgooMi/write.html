@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>맛집 정보 등록</title>
+<link rel="stylesheet" type="text/css" href="write.css">
+</head>
+<body>
+
+<div id="restaurant_form">
+    <h4>맛집 정보 등록</h4>
+    <div class="form_group">
+        <label for="restaurant_name">맛집 이름</label>
+        <input type="text" id="restaurant_name" name="restaurant_name" placeholder="맛집 이름을 입력하세요" required>
+    </div>
+
+    <div class="form_group">
+        <label for="restaurant_address">주소 URL</label>
+        <input type="text" id="restaurant_address" name="restaurant_address" placeholder="주소 URL을 입력하세요" required>
+    </div>
+
+    <div class="form_group">
+        <label for="category">카테고리 선택</label>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>카테고리를 선택하세요</option>
+            <option value="한식">한식</option>
+            <option value="중식">중식</option>
+            <option value="양식">양식</option>
+            <option value="일식">일식</option>
+            <option value="기타">기타</option>
+        </select>
+    </div>
+
+    <hr>
+
+    <div class="form_group">
+        <label for="restaurant_description">글 넣기</label>
+        <textarea id="restaurant_description" name="restaurant_description" placeholder="맛집 소개글을 입력하세요"></textarea>
+    </div>
+
+    <div class="form_group">
+        <label for="restaurant_image">사진 업로드</label>
+        <input type="file" id="restaurant_image" name="restaurant_image" accept="image/*">
+    </div>
+
+    <div class="bt_se">
+        <button type="submit" id="register_btn">등록하기</button>
+    </div>
+</div>
+
+<script>
+document.getElementById("register_btn").addEventListener("click", function() {
+    var restaurantName = document.getElementById("restaurant_name").value;
+    var restaurantAddress = document.getElementById("restaurant_address").value;
+    var category = document.getElementById("category").value;
+    var description = document.getElementById("restaurant_description").value;
+    var restaurantImage = document.getElementById("restaurant_image").files[0];
+
+    if (!restaurantName || !restaurantAddress || !category) {
+        alert("모든 필수 입력란을 채워주세요.");
+        return;
+    }
+
+    var reader = new FileReader();
+
+    reader.onloadend = function() {
+        var newRestaurant = {
+            name: restaurantName,
+            address: restaurantAddress,
+            category: category,
+            description: description,
+            likes: 0, // 초기 좋아요 수는 0으로 설정
+            image: reader.result || "" // 이미지가 없는 경우 빈 문자열로 설정
+        };
+
+        // localStorage에 새로운 맛집 정보 저장
+        localStorage.setItem(restaurantName, JSON.stringify(newRestaurant));
+
+        // 등록 완료 메시지 표시
+        alert("맛집이 성공적으로 등록되었습니다.");
+
+        // List.html로 이동
+        window.location.href = "List.html";
+    };
+
+    if (restaurantImage) {
+        reader.readAsDataURL(restaurantImage);
+    } else {
+        reader.onloadend();
+    }
+});
+</script>
+
+</body>
+</html>

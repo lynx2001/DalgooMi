@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log IN</title>
+    <link rel="stylesheet" href="log_in.css">
+    <script>
+        function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            var users = JSON.parse(localStorage.getItem('users')) || [];
+            var user = users.find(user => user.id === username && user.password === password);
+
+            if (user) {
+                alert('환영합니다');
+                window.location.href = 'After.html'; // 메인페이지로 이동
+            } else {
+                alert('입력하신 정보가 맞지 않습니다');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <td><h2>Login</h2></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="username" placeholder="Username"></td>
+            </tr>
+            <tr>
+                <td><input type="password" id="password" placeholder="Password"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="로그인" class="button" onclick="login()"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

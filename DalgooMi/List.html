@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>맛집 리스트</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="mainpage.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    .restaurant-item {
+      display: flex;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      align-items: center;
+    }
+
+    .restaurant-item img {
+      max-width: 200px;
+      max-height: 150px;
+      margin-right: 20px;
+      object-fit: cover;
+    }
+
+    .restaurant-details {
+      flex-grow: 1;
+    }
+
+    .likes-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .likes-section button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="mainpage.html">
+              <img src="Logo.png" alt="Logo">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="colored-box"><a href="mainpage.html">HOME</a></li>
+            <li class="colored-box"><a href="Introduce.html">소개합니다</a></li>
+            <li class="colored-box"><a href="List.html">맛집 리스트</a></li>
+            <li class="colored-box"><a href="write.html">글쓰기</a></li>
+          </ul>
+          </div>
+        </div>
+  </nav>
+
+  <div class="container-fluid text-center">
+    <div class="row content">
+      <div class="col-sm-2 sidenav">
+        <!-- 왼쪽 사이드바 -->
+      </div>
+      <div class="col-sm-8 text-left text-center">
+        <h4>맛집 리스트</h4>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="맛집 검색" id="search_input">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="searchRestaurants()">검색</button>
+          </span>
+        </div>
+        <div class="restaurant-list" id="restaurant_list">
+          <!-- 맛집 목록이 여기에 추가될 것입니다. -->
+        </div>
+      </div>
+      <div class="col-sm-2 sidenav">
+        <!-- 오른쪽 사이드바 -->
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- 맛집 상세 정보를 표시하는 모달 창 -->
+  <div id="restaurantModal1" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- 맛집 상세 정보를 표시하는 모달 내용 -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;"></button>
+          <h4 class="modal-title">맛집 이름 1 상세 정보</h4>
+        </div>
+        <div class="modal-body">
+          <p>맛집 정보 및 설명</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // localStorage에 임의의 맛집 정보 추가
+    localStorage.setItem('restaurant1', JSON.stringify({
+        name: '맛집 이름 1',
+        address: '서울특별시 강남구 테헤란로 1',
+        category: '한식',
+        description: '이곳은 한식을 전문으로 하는 맛집입니다.',
+        likes: 10, // 초기 좋아요 수
+        image: 'https://via.placeholder.com/200x150' // 이미지 URL (선택적)
+    }));
+    // localStorage에서 저장된 맛집 정보를 가져와서 리스트에 추가하는 함수
+    function displayRestaurants() {
+      //localStorage.clear();
+      var restaurantList = document.getElementById("restaurant_list");
+      restaurantList.innerHTML = ''; // Clear the list before adding items
+
+      // 모든 맛집 정보를 localStorage에서 가져옴
+      var restaurants = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var restaurant = JSON.parse(localStorage.getItem(key));
+        restaurants.push({key: key, data: restaurant});
+      }
+
+      // 좋아요 수에 따라 맛집 정보를 정렬
+      restaurants.sort(function(a, b) {
+        return b.data.likes - a.data.likes;
+      });
+
+      // 정렬된 맛집 정보를 리스트에 추가
+      restaurants.forEach(function(item) {
+        var restaurant = item.data;
+        var key = item.key;
+
+        var restaurantItem = document.createElement("div");
+        restaurantItem.className = "restaurant-item restaurant-box";
+        restaurantItem.innerHTML = (restaurant.image ? "<img src='" + restaurant.image + "' alt='" + restaurant.name + "' />" : "") +
+                                   "<div class='restaurant-details'>" +
+                                   "<h3>" + restaurant.name + "</h3>" +
+                                   "<p>" + restaurant.address + "</p>" +
+                                   "<p>카테고리: " + restaurant.category + "</p>" +
+                                   "<p>" + restaurant.description + "</p>" +
+                                   "<div class='likes-section'>" +
+                                   "<button onclick='likeRestaurant(\"" + key + "\", this)'>좋아요</button> " +
+                                   "<span class='likes-count'>" + restaurant.likes + "</span>" +
+                                   "</div>" +
+                                   "</div>";
+        restaurantList.appendChild(restaurantItem);
+      });
+    }
+
+    // 맛집에 좋아요를 추가하는 함수
+    function likeRestaurant(key, buttonElement) {
+      var restaurant = JSON.parse(localStorage.getItem(key));
+      restaurant.likes++;
+      localStorage.setItem(key, JSON.stringify(restaurant));
+
+      // 좋아요 수를 업데이트
+      //var likesCountElement = buttonElement.nextElementSibling;
+      //likesCountElement.textContent = restaurant.likes;
+      displayRestaurants();
+    }
+
+    // 맛집을 검색하는 함수
+    function searchRestaurants() {
+      var searchInput = document.getElementById("search_input").value.toLowerCase();
+      var restaurantList = document.getElementById("restaurant_list");
+      restaurantList.innerHTML = ''; // Clear the list before adding items
+
+      // 검색어가 있을 경우 검색어를 검색 입력 필드에 설정
+
+
+      // 모든 맛집 정보를 localStorage에서 가져옴
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var restaurant = JSON.parse(localStorage.getItem(key));
+
+        if (restaurant.name.toLowerCase().includes(searchInput)) {
+          // 맛집 정보를 리스트에 추가
+          var restaurantItem = document.createElement("div");
+          restaurantItem.className = "restaurant-item restaurant-box";
+          restaurantItem.innerHTML = (restaurant.image ? "<img src='" + restaurant.image + "' alt='" + restaurant.name + "' />" : "") +
+                                     "<div class='restaurant-details'>" +
+                                     "<h3>" + restaurant.name + "</h3>" +
+                                     "<p>" + restaurant.address + "</p>" +
+                                     "<p>카테고리: " + restaurant.category + "</p>" +
+                                     "<p>" + restaurant.description + "</p>" +
+                                     "<div class='likes-section'>" +
+                                     "<button onclick='likeRestaurant(\"" + key + "\", this)'>좋아요</button> " +
+                                     "<span class='likes-count'>" + restaurant.likes + "</span>" +
+                                     "</div>" +
+                                     "</div>";
+          restaurantList.appendChild(restaurantItem);
+        }
+      }
+    }
+
+    // 검색 입력 필드에서 Enter 키를 눌렀을 때 검색을 실행하는 함수
+    document.getElementById("search_input").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        searchRestaurants();
+      }
+    });
+
+    // 페이지가 로드될 때 localStorage에 저장된 맛집 정보를 표시
+    window.onload = displayRestaurants;
+    document.addEventListener('DOMContentLoaded', function() {
+        // URL에서 쿼리 매개변수 읽어오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('query');
+
+        // 검색어가 있을 경우 검색어를 검색 입력 필드에 설정
+        if (query) {
+            document.getElementById('search_input').value = query;
+            // List.html에서 검색 함수 호출 (이 코드는 이미 있습니다)
+            searchRestaurants();
+        }
+    });
+
+
+  </script>
+
+</body>
+</html>

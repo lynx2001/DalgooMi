@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="sign_in.css">
+    <script>
+        function signUp() {
+            var name = document.getElementById("Name").value;
+            var birth = document.getElementById("Birth").value;
+            var id = document.getElementById("ID").value;
+            var password1 = document.getElementById("Password").value;
+            var password2 = document.getElementById("CheckPassword").value;
+
+            if (name === "") {
+                alert('이름을 입력하세요');
+                document.getElementById("Name").style.borderColor = "red";
+                return;
+            } else {
+                document.getElementById("Name").style.borderColor = "";
+            }
+
+            if (birth === "") {
+                alert('생년월일을 입력하세요');
+                document.getElementById("Birth").style.borderColor = "red";
+                return;
+            } else {
+                document.getElementById("Birth").style.borderColor = "";
+            }
+
+            if (id === "") {
+                alert('ID를 입력하세요');
+                document.getElementById("ID").style.borderColor = "red";
+                return;
+            } else {
+                document.getElementById("ID").style.borderColor = "";
+            }
+
+            if (password1 === "") {
+                alert('비밀번호를 입력하세요');
+                document.getElementById("Password").style.borderColor = "red";
+                return;
+            } else {
+                document.getElementById("Password").style.borderColor = "";
+            }
+
+            if (password1 !== password2) {
+                alert('입력된 비밀번호가 다릅니다');
+                return;
+            }
+
+            // 로컬 스토리지에 사용자 정보 저장
+            var users = JSON.parse(localStorage.getItem('users')) || [];
+            var userExists = users.some(user => user.id === id);
+            if (userExists) {
+                alert('사용자가 이미 존재합니다');
+                return;
+            }
+
+            users.push({ name, birth, id, password: password1 });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('가입을 축하합니다');
+            window.location.href = 'mainpage.html'; // 메인 페이지로 이동
+        }
+    </script>
+</head>
+<body>
+    <div class="flex_container">
+        <table>
+            <tr>
+                <td><h2>Sign up</h2></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="Name" class="text" placeholder="이름을 입력하세요"></td>
+            </tr>
+            <tr>
+                <td>Birth</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="Birth" class="text" placeholder="XXXX/XX/XX"></td>
+            </tr>
+            <tr>
+                <td>ID</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="ID" class="text" placeholder="사용하실 ID를 입력하세요"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+            </tr>
+            <tr>
+                <td><input type="password" id="Password" class="text" placeholder="비밀번호를 입력하세요"></td>
+            </tr>
+            <tr>
+                <td>Check Password</td>
+            </tr>
+            <tr>
+                <td><input type="password" id="CheckPassword" class="text"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="가입하기" class="button" onclick="signUp()"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

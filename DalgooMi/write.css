@@ -1,0 +1,58 @@
+/* CSS 스타일링 */
+#restaurant_form {
+    margin: 20px auto;
+    width: 60%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 600px; /* 세로 높이를 늘림 */
+    position: relative;
+  }
+  
+  h4 {
+    color: #000;
+  }
+  
+  .form_group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  textarea,
+  select {
+    width: calc(100% - 20px); /* 오른쪽으로 20px 여백을 빼고 너비 조정 */
+    border: 2px solid #ffa040;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  select {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  #in_content textarea {
+    height: calc(100% - 160px); /* 자식 요소의 높이를 조정 */
+  }
+  
+  .bt_se button {
+    background-color: #ffa040;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .bt_se button:hover {
+    background-color: #eea236;
+  }
+  

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Main page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="mainpage.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="mainpage.html">
+        <img src="Logo.png" alt="Logo">
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="colored-box"><a href="mainpage.html">HOME</a></li>
+          <li class="colored-box"><a href="Introduce.html">소개합니다</a></li>
+          <li class="colored-box"><a href="List.html">맛집 리스트</a></li>
+          <li class="colored-box"><a href="write.html">글쓰기</a></li>
+        </ul>
+      <ul class="nav navbar-nav navbar-right">
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid text-center">
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <h4>사용자 정보</h4>
+        <p>회원님이 얻은<span id="username"></span></p>
+        <p>리워드 점수는<span id="userid"></span></p>
+        <p><span id="reward"></span></p>
+      </div>
+    </div>
+    <div class="col-sm-8 text-left">
+      <h1>나만의 맛집을 소개합니다!</h1>
+      <p>우리 동네의 맛집! 내가 소개하고 싶은! 숨겨진 맛집을 추천해주세요</p>
+      <hr>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="맛집 검색">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">검색</button>
+        </span>
+      </div>
+      <div class="category-container">
+        <div class="category-box">
+          <a href="#">#일식</a>
+          <a href="#">#한식</a>
+          <a href="china.html">#중식</a>
+          <a href="#">#양식</a>
+        </div>
+        <div class="ranking-box">
+          <a href="#">#맛집 랭킹순위</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <h4>맛집 상위 랭킹</h4>
+        <div id="rankingContainer" class="ranking-box">
+          <!-- 여기에서 정렬된 맛집 리스트가 표시됩니다 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <div class="row">
+    <div class="col-sm-4">
+      <h5>Contact Us</h5>
+      <h6>Email: 복치복치개복치@knu.ac.kr</h6>
+    </div>
+    <div class="col-sm-4">
+      <h5>Follow Us</h5>
+      <h6><a href="#">Github</a></h6>
+      <h6><a href="#">Instagram</a></h6>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    displayUserInfo();
+    loadAndSortRestaurants();
+});
+
+function loadAndSortRestaurants() {
+    const rankingContainer = document.getElementById('rankingContainer');
+    let restaurants = [];
+
+    // localStorage에서 모든 맛집 정보를 가져옴
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        let restaurant = JSON.parse(localStorage.getItem(key));
+        if (restaurant.name && restaurant.likes !== undefined) {
+            restaurants.push(restaurant);
+        }
+    }
+
+    // 좋아요 수에 따라 맛집을 정렬
+    restaurants.sort((a, b) => b.likes - a.likes);
+
+    // 정렬된 맛집 정보를 HTML에 표시
+    rankingContainer.innerHTML = '';
+    restaurants.forEach((restaurant, index) => {
+        const restaurantDiv = document.createElement('div');
+        restaurantDiv.classList.add('ranking-item');
+
+        const restaurantName = document.createElement('span');
+        restaurantName.classList.add('restaurant-name');
+        restaurantName.textContent = `${index + 1}. ${restaurant.name}`;
+
+        const category = document.createElement('span');
+        category.classList.add('category');
+        category.textContent = `#${restaurant.category}`;
+
+        restaurantDiv.appendChild(restaurantName);
+        restaurantDiv.appendChild(category);
+
+        rankingContainer.appendChild(restaurantDiv);
+    });
+}
+
+function displayUserInfo() {
+    const username = localStorage.getItem('username');
+    const userid = localStorage.getItem('userid');
+    document.getElementById('username').textContent = username;
+    document.getElementById('userid').textContent = userid;
+
+    // 좋아요 수 계산
+    let totalLikes = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        let restaurant = JSON.parse(localStorage.getItem(key));
+        if (restaurant.likes !== undefined) {
+            totalLikes += restaurant.likes;
+        }
+    }
+    const reward = totalLikes * 10;
+    document.getElementById('reward').textContent = reward;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 검색 버튼 클릭 이벤트 리스너 추가
+    document.querySelector('.btn-default').addEventListener('click', function() {
+        // 검색어를 가져와서 URL에 추가
+        var searchInput = document.querySelector('.form-control').value;
+        var url = 'List.html?query=' + encodeURIComponent(searchInput);
+        window.location.href = url; // List.html로 이동
+    });
+});
+</script>
+
+</body>
+</html>

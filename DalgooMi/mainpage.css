@@ -1,0 +1,194 @@
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+  background-color: violet; /* 밝은 주황색 배경 */
+  height: 70px;
+}
+
+.navbar-inverse {
+  background-color: violet !important; /* 주황색 배경 색상 설정 */
+  border-color: violet !important; /* 네비게이션 바 테두리 색상 설정 */
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: #fff;
+  line-height: 50px; /* 항목의 세로 가운데 정렬을 위해 추가 */
+}
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-nav > li > a:focus,
+.navbar-inverse .navbar-nav > li > a:hover {
+  padding-top: 10px; /* 항목의 위 여백을 조절 */
+  padding-bottom: 10px; /* 항목의 아래 여백을 조절 */
+}
+
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-nav > li > a:focus,
+.navbar-inverse .navbar-nav > li > a:hover {
+  color: #000000 !important; /* 메뉴 항목의 텍스트 색상을 검은색으로 설정 */
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background-color: #d58512; /* 활성화된 메뉴 항목의 배경색을 변경 */
+  color: #fff !important; /* 활성화된 메뉴 항목 텍스트 색상을 검은색으로 설정 */
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: #000000; /* 햄버거 메뉴 버튼의 테두리 색상을 흰색으로 설정 */
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+  background-color: #ffffff ; /* 햄버거 메뉴 버튼에 마우스를 올렸을 때의 배경색을 변경 */
+}
+
+.navbar-brand img {
+  max-width: 100px; /* 최대 너비 */
+  max-height: 50px; /* 최대 높이 */
+  margin-top: -2px; /* 위로 이동하는 값 */
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {height: 600px;}
+
+/* Set gray background color and 100% height */
+.sidenav {
+  padding-top: 20px;
+  background-color: #f9f9f9;
+  height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #4c4c4c;
+  color: white;
+  text-align: center;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+  .sidenav {
+    height: auto;
+    padding: 15px;
+  }
+  .row.content {height:auto;}
+}
+
+.input-group .form-control {
+  border-radius: 25px; /*둥근 테두리*/
+  border: 2px solid #ffc8ff; /* 테두리*/
+  padding: 22px; /* 내부 여백 */
+  background-color: transparent; /*투명*/
+  color: #000;
+}
+
+.input-group button {
+  background-color: #ffa0f0;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  padding: 14px 25px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 25px; /* 둥근 테두리*/
+  margin-left: -4px; /* 입력창과 버튼 사이 간격*/
+}
+
+.ranking-box {
+  margin-top: 20px; /* 랭킹 박스와 상위 요소 간의 간격 설정 */
+}
+
+.ranking-item {
+  margin-bottom: 15px; /* 각 랭킹 항목 사이의 간격 설정 */
+}
+
+.restaurant-box {
+  padding: 15px; /* 내부 여백 설정 */
+  border-radius: 10px; /* 가게 정보 박스의 테두리 모서리를 둥글게 설정 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+  margin-bottom: 20px; /* 각 가게 정보 박스 사이의 간격 설정 */
+}
+
+.restaurant-name {
+  font-weight: bold; /* 가게 이름의 글꼴 굵기 설정 */
+  font-size: 15px; /* 가게 이름의 글꼴 크기 설정 */
+  color: #333; /* 가게 이름의 텍스트 색상 설정 */
+  margin-bottom: 20px; /* 가게 이름과 카테고리 사이의 간격 설정 */
+}
+
+
+.category {
+  font-size: 12px; /* 카테고리 텍스트의 글꼴 크기 설정 */
+  color: #fff; /* 카테고리 텍스트의 색상 설정 */
+  display: inline-block; /* 인라인 요소로 설정하여 텍스트와 네모가 한 줄에 표시되도록 함 */
+  padding: 5px 10px; /* 내부 여백 설정 */
+  border-radius: 20px; /* 네모의 모서리를 둥글게 설정 */
+  background-color: #ff50cf; /* 배경색 설정 */
+  margin-bottom: 10px; /* 카테고리와 다음 가게 정보 박스 사이의 간격 설정 */
+}
+
+.hr-line {
+  border: 0; /* 가로선의 테두리 스타일 설정 */
+  border-top: 1px solid #ccc; /* 가로선의 위쪽 테두리 스타일 설정 */
+  margin: 10px 0; /* 가로선의 위 아래 여백 설정 */
+}
+
+.category-container {
+  text-align: center; /* 카테고리 및 랭킹 컨테이너를 가운데 정렬 */
+  margin-top: 20px; /* 위쪽 여백 추가 */
+}
+
+.category-box, .ranking-box {
+  display: inline-block;
+}
+
+.category-box a, .ranking-box a {
+  display: inline-block;
+  padding: 8px 16px; /* 내부 여백 설정 */
+  margin-right: 10px; /* 각 항목간의 간격 조정 */
+  margin-bottom: 10px; /* 아래쪽 여백 추가 */
+  border-radius: 20px; /* 네모의 모서리를 둥글게 설정 */
+  background-color: #ffa5f0; /* 배경색 설정 */
+  color: #ffffff; /* 텍스트 색상 설정 */
+  text-decoration: none; /* 링크에 밑줄 제거 */
+}
+
+.category-box a:hover, .ranking-box a:hover {
+  background-color: #ff33cc; /* 호버 시 배경색 변경 */
+}
+
+.colored-box {
+  display: flex; /* Flex 컨테이너로 설정 */
+  height: 60px; /* 화면 세로 높이의 절반만큼의 높이 설정 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  background-color: violet; /* 배경색 설정 */
+  border-radius: 5px; /* 테두리 둥글기 설정 */
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  padding: 5px 10px;
+  margin-right: 15px; /* 박스 간의 간격 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.colored-box li {
+  padding: 0; /* 내부 여백 제거 */
+  list-style-type: none;
+}
+
+.colored-box li a {
+  color: #fff; /* 텍스트 색상 설정 */
+  text-decoration: none; /* 링크에 밑줄 제거 */
+  display: flex; /* Flex 컨테이너로 설정 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  height: 100%; /* 부모 요소의 높이와 동일하게 설정 */
+  width: 100%; /* 부모 요소의 너비와 동일하게 설정 */
+}
